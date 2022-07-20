@@ -1,13 +1,9 @@
-//
-//  ViewController.swift
-//  Messenger
-//
-//  Created by Genusys Inc on 7/20/22.
-//
+
+
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConversationVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
