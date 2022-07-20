@@ -142,6 +142,7 @@ class RegistrationVC: UIViewController {
     
    @objc  func onTappedImage(){
         print("onTappedImage")
+       presentPhotoActionSheet()
     }
     
     override func viewDidLayoutSubviews() {
@@ -230,4 +231,35 @@ extension RegistrationVC:UITextFieldDelegate{
         }
         return true
     }
+}
+
+
+extension RegistrationVC:UIImagePickerControllerDelegate{
+    
+    func presentPhotoActionSheet(){
+        
+        let actionsheet = UIAlertController(title: "Profile Picture", message: "How would you like to select a picture", preferredStyle: .actionSheet)
+        
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        actionsheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+            print("Take a photo")
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Chose Photo", style: .default, handler: { _ in
+            
+            print("Chose a photo")
+        }))
+
+        self.present(actionsheet, animated: true)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+    }
+    
 }
