@@ -13,6 +13,10 @@ class RegistrationVC: UIViewController {
         let img = UIImageView(image: UIImage(systemName: "person"))
         img.contentMode = .scaleAspectFit
         img.tintColor = .gray
+        img.layer.masksToBounds = true
+        img.layer.borderWidth = 2
+        img.layer.borderColor = UIColor.lightGray.cgColor
+        
         return img
     }()
     
@@ -69,7 +73,7 @@ class RegistrationVC: UIViewController {
         let field = UITextField()
         field.autocapitalizationType = .none
         field.autocorrectionType = .no
-        field.returnKeyType = .done
+        field.returnKeyType = .continue
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.lightGray.cgColor
@@ -154,6 +158,8 @@ class RegistrationVC: UIViewController {
         
         logoImg.frame = CGRect(x: (scrollView.width - size)/2 , y: 30, width: size, height: size)
         
+        logoImg.layer.cornerRadius = size/2
+        
         firstNameField.frame = CGRect(x: 30 , y:logoImg.bottom + 10, width: scrollView.width - 60, height: 52)
         lastNameField.frame = CGRect(x: 30 , y:firstNameField.bottom + 10, width: scrollView.width - 60, height: 52)
         
@@ -234,7 +240,7 @@ extension RegistrationVC:UITextFieldDelegate{
 }
 
 
-extension RegistrationVC:UIImagePickerControllerDelegate{
+extension RegistrationVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     func presentPhotoActionSheet(){
         
@@ -242,11 +248,13 @@ extension RegistrationVC:UIImagePickerControllerDelegate{
         
         actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        actionsheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+        actionsheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: {[weak self]  _ in
+            self?.presentCamera()
+
             print("Take a photo")
         }))
-        actionsheet.addAction(UIAlertAction(title: "Chose Photo", style: .default, handler: { _ in
-            
+        actionsheet.addAction(UIAlertAction(title: "Chose Photo", style: .default, handler: {[weak self] _ in
+            self?.presentPhotoLibrary()
             print("Chose a photo")
         }))
 
@@ -254,12 +262,33 @@ extension RegistrationVC:UIImagePickerControllerDelegate{
         
     }
     
+    func presentCamera(){
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func presentPhotoLibrary(){
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+        picker.dismiss(animated: true)
+
+        print(info)
+        let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        self.logoImg.image = selectedImage
+
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        picker.dismiss(animated: true)
     }
     
 }
