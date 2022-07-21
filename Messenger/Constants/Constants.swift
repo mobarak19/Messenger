@@ -9,5 +9,7 @@ import Foundation
 
 
 class Constants{
+    
     static let APP_DATABASE_NAME = "messenger"
+    
 }

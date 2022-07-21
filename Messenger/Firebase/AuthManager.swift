@@ -42,14 +42,14 @@ class AuthManager{
             
         }
     }
-    func signOut(completion:@escaping (Result<Bool,AuthError>)->Void){
+    func signOut(completion:@escaping (Bool)->Void){
         do{
             
            try! FirebaseAuth.Auth.auth().signOut()
-            completion(.success(true))
+            completion(true)
             
         }catch{
-            completion(.failure(.signOutError))
+            completion(false)
             
         }
     }

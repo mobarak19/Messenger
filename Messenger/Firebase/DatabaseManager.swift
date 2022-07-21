@@ -29,7 +29,7 @@ extension DatabaseManager{
     ///check if a user exsits
     
     func ifUserExist(email:String,completion:@escaping(Bool)->Void){
-        database.child(email).observeSingleEvent(of: .value) { snapshot in
+        database.child(email.makeFirebaseDatabaseKey()).observeSingleEvent(of: .value) { snapshot in
             guard snapshot.value is String else{
                 completion(false)
                 return
@@ -42,7 +42,7 @@ extension DatabaseManager{
     ///insert User into database
     func insertUser(user: UserModel,completion:@escaping(Bool)->Void){
         do{
-            database.child(user.email).setValue([
+            database.child(user.email.makeFirebaseDatabaseKey()).setValue([
                 "first_name":user.firstName,
                 "last_name":user.lastName
             ])

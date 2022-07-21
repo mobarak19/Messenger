@@ -20,7 +20,7 @@ class AuthVM{
         self.repo?.signIn(with: email, password: password, completion: completion)
     }
     
-    func signOut(completion:@escaping (Result<Bool,AuthError>)->Void){
+    func signOut(completion:@escaping (Bool)->Void){
         self.repo?.signOut(completion: completion)
     }
     

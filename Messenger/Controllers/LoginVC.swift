@@ -26,7 +26,6 @@ class LoginVC: UIViewController {
         field.returnKeyType = .continue
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
-        field.text = "m@gmail.com"
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.placeholder = "Email Address..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
@@ -42,7 +41,6 @@ class LoginVC: UIViewController {
         field.returnKeyType = .done
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
-        field.text = "123456"
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.placeholder = "Password..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
@@ -78,6 +76,9 @@ class LoginVC: UIViewController {
 
         emailField.delegate = self
         passwordField.delegate = self
+        
+        emailField.text = "mobarak@gmail.com"
+        passwordField.text = "123456"
         
         loginBtn.addTarget(self, action: #selector(didTappedLoggedIn), for: .touchUpInside)
 

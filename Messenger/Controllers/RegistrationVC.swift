@@ -135,6 +135,12 @@ class RegistrationVC: UIViewController {
         firstNameField.delegate = self
         lastNameField.delegate = self
         
+        emailField.text = "mobarak@gmail.com"
+        firstNameField.text = "Mobarak"
+        lastNameField.text = "Hossen"
+        passwordField.text = "123456"
+        confirmPasswordField.text = "123456"
+        
         confirmPasswordField.delegate = self
         registerBtn.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         let tapped = UITapGestureRecognizer(target: self, action: #selector(onTappedImage))
@@ -205,7 +211,7 @@ class RegistrationVC: UIViewController {
         authVM.isUserExsists(with: email) { [weak self] response in
             if response{
                 print("User already exists, please log in")
-
+                self?.userRegistrationErrorAlert(messege: "User already exists, please log in")
             }else{
                 let user = UserModel(firstName: firstName, lastName: lastName, email: email)
                 self?.insertUserIntoDatabase(with: user,password: password)
@@ -242,8 +248,8 @@ class RegistrationVC: UIViewController {
     
     
     
-    func userRegistrationErrorAlert(){
-        let alert  = UIAlertController(title: "Woops", message: "Please enter all informartion to create a new account.", preferredStyle: .alert)
+    func userRegistrationErrorAlert(messege:String = "Please enter all informartion to create a new account."){
+        let alert  = UIAlertController(title: "Woops", message: messege, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
         self.present(alert, animated: true)

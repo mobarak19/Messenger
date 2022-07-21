@@ -26,7 +26,7 @@ class AuthRepoImp:AuthRepo{
         
         self.auth?.signIn(with: email, password: password, completion: completion)
     }
-    func signOut(completion: @escaping (Result<Bool, AuthError>) -> Void) {
+    func signOut(completion: @escaping (Bool) -> Void) {
         
         self.auth?.signOut(completion: completion)
     }

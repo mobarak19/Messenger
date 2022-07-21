@@ -25,3 +25,10 @@ extension UIView{
         return frame.origin.y + frame.size.height
     }
 }
+
+extension String{
+    
+    func makeFirebaseDatabaseKey()->String{
+        return self.replacingOccurrences(of: "@", with: "-").replacingOccurrences(of: ".", with: "-")
+    }
+}
