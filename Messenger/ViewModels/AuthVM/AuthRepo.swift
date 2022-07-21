@@ -1,0 +1,16 @@
+//
+//  RegistrationRepo.swift
+//  Messenger
+//
+//  Created by Genusys Inc on 7/21/22.
+//
+
+import Foundation
+
+protocol AuthRepo{
+    func createUser(with email:String,password:String,completion:@escaping (Result<Bool,AuthError>)->Void)
+    func signIn(with email:String,password:String,completion:@escaping (Result<String,AuthError>)->Void)
+    func signOut(completion:@escaping (Result<Bool,AuthError>)->Void)
+    func isUserExsists(with email:String,completion:@escaping(Bool)->Void)
+    func insertUser(user: UserModel,completion:@escaping(Bool)->Void)
+}

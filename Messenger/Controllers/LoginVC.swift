@@ -26,6 +26,7 @@ class LoginVC: UIViewController {
         field.returnKeyType = .continue
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
+        field.text = "m@gmail.com"
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.placeholder = "Email Address..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
@@ -41,6 +42,7 @@ class LoginVC: UIViewController {
         field.returnKeyType = .done
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
+        field.text = "123456"
         field.layer.borderColor = UIColor.lightGray.cgColor
         field.placeholder = "Password..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
@@ -60,6 +62,7 @@ class LoginVC: UIViewController {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return btn
     }()
+    let authVM  = AuthVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +82,7 @@ class LoginVC: UIViewController {
         loginBtn.addTarget(self, action: #selector(didTappedLoggedIn), for: .touchUpInside)
 
     }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -107,7 +111,18 @@ class LoginVC: UIViewController {
             userLoginErrorAlert()
             return
         }
+        
         //firebaase login
+        authVM.signIn(with: email, password: password) { [weak self]result in
+            
+            switch result{
+            case .success(let email):
+                self?.navigationController?.dismiss(animated: true)
+            case .failure(let error):
+                print(error)
+            }
+            
+        }
         
     }
     

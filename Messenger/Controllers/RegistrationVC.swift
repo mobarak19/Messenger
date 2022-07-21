@@ -10,7 +10,7 @@ import UIKit
 class RegistrationVC: UIViewController {
     
     private var logoImg:UIImageView  = {
-        let img = UIImageView(image: UIImage(systemName: "person"))
+        let img = UIImageView(image: UIImage(systemName: "person.circle"))
         img.contentMode = .scaleAspectFit
         img.tintColor = .gray
         img.layer.masksToBounds = true
@@ -112,6 +112,7 @@ class RegistrationVC: UIViewController {
         return btn
     }()
     
+    let authVM = AuthVM()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -200,9 +201,46 @@ class RegistrationVC: UIViewController {
             return
         }
         
-        //firebase register user
+        
+        authVM.isUserExsists(with: email) { [weak self] response in
+            if response{
+                print("User already exists, please log in")
+
+            }else{
+                let user = UserModel(firstName: firstName, lastName: lastName, email: email)
+                self?.insertUserIntoDatabase(with: user,password: password)
+            }
+        }
         
     }
+    
+    func insertUserIntoDatabase(with user:UserModel,password:String){
+        
+        
+        authVM.createUser(with: user.email, password: password) {[weak self] response in
+            switch response{
+                
+            case .success(let success):
+                
+                self?.authVM.insertUser(with: user, completion: { status in
+                    if status {
+                        print("User inserted success fully")
+                        self?.navigationController?.dismiss(animated: true)
+
+                    }else{
+                        print("Could not insert user")
+
+                    }
+                })
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+
+    }
+    
+    
     
     func userRegistrationErrorAlert(){
         let alert  = UIAlertController(title: "Woops", message: "Please enter all informartion to create a new account.", preferredStyle: .alert)
@@ -281,7 +319,6 @@ extension RegistrationVC:UIImagePickerControllerDelegate,UINavigationControllerD
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
 
-        print(info)
         let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         self.logoImg.image = selectedImage
 
