@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class LoginVC: UIViewController {
+    let spinner = JGProgressHUD(style: .dark)
 
     private var logoImg:UIImageView  = {
         let img = UIImageView(image: UIImage(named: "messenger"))
@@ -112,10 +114,13 @@ class LoginVC: UIViewController {
             userLoginErrorAlert()
             return
         }
-        
+        spinner.show(in: view)
         //firebaase login
         authVM.signIn(with: email, password: password) { [weak self]result in
-            
+            DispatchQueue.main.async {
+                self?.spinner.dismiss(animated: true)
+
+            }
             switch result{
             case .success(let email):
                 self?.navigationController?.dismiss(animated: true)

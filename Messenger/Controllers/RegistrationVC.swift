@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class RegistrationVC: UIViewController {
-    
+
+    let spinner = JGProgressHUD(style: .dark)
+
     private var logoImg:UIImageView  = {
         let img = UIImageView(image: UIImage(systemName: "person.circle"))
         img.contentMode = .scaleAspectFit
@@ -207,9 +210,13 @@ class RegistrationVC: UIViewController {
             return
         }
         
-        
+        spinner.show(in: view)
         authVM.isUserExsists(with: email) { [weak self] response in
             if response{
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss(animated: true)
+
+                }
                 print("User already exists, please log in")
                 self?.userRegistrationErrorAlert(messege: "User already exists, please log in")
             }else{
@@ -229,6 +236,10 @@ class RegistrationVC: UIViewController {
             case .success(let success):
                 
                 self?.authVM.insertUser(with: user, completion: { status in
+                    DispatchQueue.main.async {
+                        self?.spinner.dismiss(animated: true)
+
+                    }
                     if status {
                         print("User inserted success fully")
                         self?.navigationController?.dismiss(animated: true)
@@ -240,6 +251,9 @@ class RegistrationVC: UIViewController {
                 })
                 
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss(animated: true)
+                }
                 print(error)
             }
         }

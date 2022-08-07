@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2023F6E9289F859A00325515 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2023F6E8289F859A00325515 /* ChatVC.swift */; };
 		20D2FA1D2887F70D000D23E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D2FA1C2887F70D000D23E9 /* AppDelegate.swift */; };
 		20D2FA1F2887F70D000D23E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D2FA1E2887F70D000D23E9 /* SceneDelegate.swift */; };
 		20D2FA212887F70D000D23E9 /* ConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D2FA202887F70D000D23E9 /* ConversationVC.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2023F6E8289F859A00325515 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		20D2FA192887F70D000D23E9 /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D2FA1C2887F70D000D23E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20D2FA1E2887F70D000D23E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				20D2FA3B2887FC34000D23E9 /* NewConversationVC.swift */,
 				20D2FA3D2887FC4E000D23E9 /* PhotoViewerVC.swift */,
 				20D2FA3F2887FC65000D23E9 /* VideoPlayerVC.swift */,
+				2023F6E8289F859A00325515 /* ChatVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 			files = (
 				20D416732889192100BAE8A8 /* DatabaseManager.swift in Sources */,
 				20D41675288919A100BAE8A8 /* Constants.swift in Sources */,
+				2023F6E9289F859A00325515 /* ChatVC.swift in Sources */,
 				20D2FA362887FBF0000D23E9 /* ProfileVC.swift in Sources */,
 				20D2FA4428880053000D23E9 /* MessengerDefaults.swift in Sources */,
 				20D416692888FFEA00BAE8A8 /* AuthRepo.swift in Sources */,
