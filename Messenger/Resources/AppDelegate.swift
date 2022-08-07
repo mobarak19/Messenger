@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import FirebaseMessaging
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,6 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        UNUserNotificationCenter.current().delegate = self
+
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+          options: authOptions,
+          completionHandler: { _, _ in }
+        )
+        
+        application.registerForRemoteNotifications()
+        
+        Messaging.messaging().delegate = self
+
         return true
     }
 
@@ -37,3 +50,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+extension AppDelegate:UNUserNotificationCenterDelegate{
+//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        Messaging.messaging().apnsToken = deviceToken
+//
+//    }
+}
+
+
+extension AppDelegate:MessagingDelegate{
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print(fcmToken)
+        
+    
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+          NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+          )
+
+    }
+}

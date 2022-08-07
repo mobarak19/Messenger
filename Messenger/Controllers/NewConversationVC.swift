@@ -30,7 +30,6 @@ class NewConversationVC: UIViewController {
 
 }
 
-
 extension NewConversationVC:UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         

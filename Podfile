@@ -7,9 +7,10 @@ target 'Messenger' do
 
   # Pods for Messenger
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Database'
+  pod 'FirebaseCore'
+  pod 'FirebaseAuth'
+  pod 'FirebaseDatabase'
+  pod 'FirebaseMessaging'
   
   pod 'MessageKit'
   pod 'JGProgressHUD'
