@@ -11,7 +11,8 @@ target 'Messenger' do
   pod 'FirebaseAuth'
   pod 'FirebaseDatabase'
   pod 'FirebaseMessaging'
-  
+  pod 'FirebaseStorage'
+
   pod 'MessageKit'
   pod 'JGProgressHUD'
   pod 'RealmSwift'

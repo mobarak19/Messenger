@@ -236,15 +236,16 @@ class RegistrationVC: UIViewController {
             case .success(let success):
                 
                 self?.authVM.insertUser(with: user, completion: { status in
-                    DispatchQueue.main.async {
-                        self?.spinner.dismiss(animated: true)
-
-                    }
+               
                     if status {
                         print("User inserted success fully")
-                        self?.navigationController?.dismiss(animated: true)
+                        self?.uploadProfilePicture(user: user)
 
                     }else{
+                        DispatchQueue.main.async {
+                            self?.spinner.dismiss(animated: true)
+
+                        }
                         print("Could not insert user")
 
                     }
@@ -260,6 +261,27 @@ class RegistrationVC: UIViewController {
 
     }
     
+    func uploadProfilePicture(user:UserModel){
+        let image = logoImg.image
+        guard let image = image, let imageData = image.pngData() else {
+            return
+        }
+
+        self.authVM.uploadProfilePic(with: imageData, filename: user.profilePicureUrl) { result in
+            switch result{
+            case .success(let urlString):
+                print(urlString)
+                MessengerDefaults.shared.profilePicture = urlString
+                MessengerDefaults.shared.userEmail = user.email
+
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        self.navigationController?.dismiss(animated: true)
+
+    }
     
     
     func userRegistrationErrorAlert(messege:String = "Please enter all informartion to create a new account."){

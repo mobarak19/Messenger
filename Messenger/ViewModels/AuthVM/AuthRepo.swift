@@ -13,4 +13,7 @@ protocol AuthRepo{
     func signOut(completion:@escaping (Bool)->Void)
     func isUserExsists(with email:String,completion:@escaping(Bool)->Void)
     func insertUser(user: UserModel,completion:@escaping(Bool)->Void)
+    func uploadProfilePic(with data:Data,filename:String,completion:@escaping (Result<String,Error>)->Void)
+    func downloadURL(with path:String,completion:@escaping (Result<URL,Error>)->Void)
+    
 }

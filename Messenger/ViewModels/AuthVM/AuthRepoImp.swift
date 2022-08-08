@@ -11,10 +11,12 @@ class AuthRepoImp:AuthRepo{
     static let shared = AuthRepoImp()
     private var auth : AuthManager?
     private var db : DatabaseManager?
+    private var storage : StorageManager?
 
     init(){
         self.auth = AuthManager.shared
         self.db = DatabaseManager.shared
+        self.storage = StorageManager.shared
     }
     
     func createUser(with email: String, password: String, completion: @escaping (Result<Bool, AuthError>) -> Void) {
@@ -37,4 +39,11 @@ class AuthRepoImp:AuthRepo{
         self.db?.insertUser(user: user, completion: completion)
 
     }
+    func uploadProfilePic(with data:Data,filename:String,completion:@escaping (Result<String,Error>)->Void){
+        self.storage?.uploadProfilePicture(with: data, filename: filename, completion: completion)
+    }
+    func downloadURL(with path:String,completion:@escaping (Result<URL,Error>)->Void){
+        self.storage?.downloadURL(for: path, completion: completion)
+    }
+
 }

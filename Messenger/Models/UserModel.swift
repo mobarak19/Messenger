@@ -11,5 +11,7 @@ struct UserModel:Codable{
     let firstName:String
     let lastName:String
     let email:String
-    //let profilePicureUrl:String
+    var profilePicureUrl:String {
+        return "\(email.makeFirebaseDatabaseKey())\(Constants.PROFILE_PICTURE_POSTFIX)"
+    }
 }

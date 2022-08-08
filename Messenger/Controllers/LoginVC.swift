@@ -123,6 +123,8 @@ class LoginVC: UIViewController {
             }
             switch result{
             case .success(let email):
+                MessengerDefaults.shared.profilePicture = "urlString"
+                MessengerDefaults.shared.userEmail = email
                 self?.navigationController?.dismiss(animated: true)
             case .failure(let error):
                 print(error)

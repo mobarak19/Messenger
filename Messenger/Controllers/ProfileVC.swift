@@ -1,9 +1,10 @@
 
 
 import UIKit
-
+import JGProgressHUD
 class ProfileVC: UIViewController {
-    
+    let spinner = JGProgressHUD(style: .dark)
+
     @IBOutlet var tableView:UITableView!
     var data:[String] = ["Log Out"]
     
@@ -14,9 +15,61 @@ class ProfileVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.tableHeaderView = createHeaderView()
+    }
+    func createHeaderView()->UIView?{
         
+        let email = MessengerDefaults.shared.userEmail
+        guard !email.isEmpty else{
+            return nil
+        }
+        let fileName = email.makeFirebaseDatabaseKey() + Constants.PROFILE_PICTURE_POSTFIX
+        let path = "/images/" + fileName
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 300))
+        headerView.backgroundColor = .systemBackground
+        
+        let imageView = UIImageView(frame: CGRect(x: (headerView.width-150)/2, y: 75, width: 150, height: 150))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderWidth = 3
+        imageView.layer.cornerRadius = imageView.width/2
+        imageView.layer.masksToBounds = true
+        headerView.addSubview(imageView)
+        spinner.show(in: headerView)
+        self.authVM.downloadURL(with: path) { result in
+            switch result{
+            case .success(let urlString):
+                self.downloadImage(imageView:imageView,url:urlString)
+            case .failure(let error):
+                print(error)
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
+            }
+        }
+        return headerView
     }
     
+    func downloadImage(imageView:UIImageView,url:URL){
+        
+        URLSession.shared.dataTask(with: url,completionHandler: { data, _, error in
+           
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+
+                let image = UIImage(data: data)
+                imageView.image = image
+            }
+            
+        }).resume()
+    }
 }
 
 extension ProfileVC: UITableViewDelegate,UITableViewDataSource{
