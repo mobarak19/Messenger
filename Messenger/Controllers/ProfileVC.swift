@@ -3,7 +3,7 @@
 import UIKit
 import JGProgressHUD
 class ProfileVC: UIViewController {
-    let spinner = JGProgressHUD(style: .dark)
+    let spinner = JGProgressHUD(style: .light)
 
     @IBOutlet var tableView:UITableView!
     var data:[String] = ["Log Out"]
@@ -16,6 +16,7 @@ class ProfileVC: UIViewController {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableHeaderView = createHeaderView()
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     func createHeaderView()->UIView?{
         
@@ -26,10 +27,10 @@ class ProfileVC: UIViewController {
         let fileName = email.makeFirebaseDatabaseKey() + Constants.PROFILE_PICTURE_POSTFIX
         let path = "/images/" + fileName
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 300))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 250))
         headerView.backgroundColor = .systemBackground
         
-        let imageView = UIImageView(frame: CGRect(x: (headerView.width-150)/2, y: 75, width: 150, height: 150))
+        let imageView = UIImageView(frame: CGRect(x: (headerView.width-150)/2, y: 50, width: 150, height: 150))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.borderWidth = 3

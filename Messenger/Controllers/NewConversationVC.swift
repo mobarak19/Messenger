@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class NewConversationVC: UIViewController {
 
+    private let spinner = JGProgressHUD(style: .dark)
     private let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search for users..."
@@ -61,7 +63,17 @@ class NewConversationVC: UIViewController {
 
 extension NewConversationVC:UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        guard let text = searchBar.text,!text.replacingOccurrences(of: " ", with: "").isEmpty else{
+            return
+        }
+        spinner.show(in: view)
+        self.searchUsers(query:text)
+    }
+    func searchUsers(query:String){
+        //check if array has firebase results
+        //if it does:filter
+        //if not, fetch then filter
+        //update the UI: either show results or show no results label
     }
 }
 
