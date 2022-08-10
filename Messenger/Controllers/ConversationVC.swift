@@ -40,10 +40,25 @@ class ConversationVC: UIViewController {
     
     @objc func didTappedComposeBtn(){
         let vc = NewConversationVC()
+        vc.completion = { [weak self] targetUser in
+        
+            self?.createNewChat(target: targetUser)
+        }
         let navVC = UINavigationController(rootViewController: vc)
        // navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true)
 
+    }
+    func createNewChat(target:[String:String]){
+        
+        guard let name = target["name"],let email = target["email"] else{
+            return
+        }
+        let vc = ChatVC(with: email)
+        vc.title = name
+        vc.isNewConversation = true
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,9 +84,7 @@ class ConversationVC: UIViewController {
             nav.modalPresentationStyle = .fullScreen
             self.present(nav, animated: false)
         }
-
     }
-
 }
 
 extension ConversationVC: UITableViewDelegate,UITableViewDataSource{
@@ -87,8 +100,9 @@ extension ConversationVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = ChatVC()
+        let vc = ChatVC(with: "emal")
         vc.title = "Jenny Smith"
+        vc.isNewConversation = false
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }

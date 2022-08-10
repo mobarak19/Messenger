@@ -9,8 +9,6 @@ import Foundation
 
 
 class Constants{
-    
     static let APP_DATABASE_NAME = "messenger"
     static let PROFILE_PICTURE_POSTFIX = "_profile_picture.png"
-    
 }

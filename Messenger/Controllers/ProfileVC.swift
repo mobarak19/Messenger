@@ -38,6 +38,7 @@ class ProfileVC: UIViewController {
         imageView.layer.masksToBounds = true
         headerView.addSubview(imageView)
         spinner.show(in: headerView)
+        
         self.authVM.downloadURL(with: path) { result in
             switch result{
             case .success(let urlString):
