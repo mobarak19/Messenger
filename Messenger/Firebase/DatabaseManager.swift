@@ -109,5 +109,18 @@ extension DatabaseManager{
 
 extension DatabaseManager{
     
+    func createNewConversation(with otherUserEmail:String,firstMessage:Message,completion:@escaping(Bool)->Void){
+        
+    }
+    func getAllConversations(for email:String,completion:@escaping(Result<String,Error>)->Void){
+        
+    }
+    
+    func getMessagesForConvarsation(with id:String,completion:@escaping(Result<String,Error>)->Void){
+        
+    }
+    func sendMessage(to conversation:String,message:Message,completion:@escaping(Bool)->Void){
+        
+    }
     
 }

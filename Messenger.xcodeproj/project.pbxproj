@@ -32,6 +32,7 @@
 		20D4167728891A3700BAE8A8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D4167628891A3700BAE8A8 /* UserModel.swift */; };
 		20DD3DF628A0C0F0006958FF /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DD3DF528A0C0F0006958FF /* StorageManager.swift */; };
 		20DD3DF828A0C472006958FF /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DD3DF728A0C472006958FF /* CustomErrors.swift */; };
+		20F1479228A4B6F200D998FE /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1479128A4B6F200D998FE /* Helper.swift */; };
 		F3FDEA71F018F4D61AE3EF51 /* Pods_Messenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8704266A41DA8A6AC7B35E /* Pods_Messenger.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		20D4167628891A3700BAE8A8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		20DD3DF528A0C0F0006958FF /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		20DD3DF728A0C472006958FF /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
+		20F1479128A4B6F200D998FE /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		4D8704266A41DA8A6AC7B35E /* Pods_Messenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		838BCFDB61327C14607710D9 /* Pods-Messenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.release.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.release.xcconfig"; sourceTree = "<group>"; };
 		FF21EA4469FE2A431BCF77C6 /* Pods-Messenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messenger.debug.xcconfig"; path = "Target Support Files/Pods-Messenger/Pods-Messenger.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				20D2FA4328880053000D23E9 /* MessengerDefaults.swift */,
 				20D2FA45288806A6000D23E9 /* Extensions.swift */,
 				20DD3DF728A0C472006958FF /* CustomErrors.swift */,
+				20F1479128A4B6F200D998FE /* Helper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				20DD3DF628A0C0F0006958FF /* StorageManager.swift in Sources */,
 				20D416712889024400BAE8A8 /* AuthManager.swift in Sources */,
 				20D2FA3C2887FC34000D23E9 /* NewConversationVC.swift in Sources */,
+				20F1479228A4B6F200D998FE /* Helper.swift in Sources */,
 				20D4166B2888FFFB00BAE8A8 /* AuthRepoImp.swift in Sources */,
 				20D2FA3E2887FC4E000D23E9 /* PhotoViewerVC.swift in Sources */,
 				20D416672888FEA000BAE8A8 /* AuthVM.swift in Sources */,

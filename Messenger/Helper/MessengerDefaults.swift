@@ -10,6 +10,7 @@ class MessengerDefaults{
         
         case kUserEmail = "kUserEmail"
         case kProfilePicUrl = "kProfilePicUrl"
+        case kUserName = "kUserName"
 
     }
     
@@ -23,5 +24,11 @@ class MessengerDefaults{
         get{UserDefaults.standard.string(forKey: MessengerDefaultsKeys.kUserEmail.rawValue) ?? ""}
         set{UserDefaults.standard.set(newValue,forKey: MessengerDefaultsKeys.kUserEmail.rawValue)}
     }
+    
+    var userName : String{
+        get{UserDefaults.standard.string(forKey: MessengerDefaultsKeys.kUserName.rawValue) ?? ""}
+        set{UserDefaults.standard.set(newValue,forKey: MessengerDefaultsKeys.kUserName.rawValue)}
+    }
+    
     var isLoggedIn : Bool = FirebaseAuth.Auth.auth().currentUser != nil
 }

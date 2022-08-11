@@ -12,18 +12,22 @@ import InputBarAccessoryView
 
 class ChatVC: MessagesViewController {
 
+    
     var otherUserEmail :String
     
     var isNewConversation = false
     
     private var messages = [Message]()
     
-    private let selfSender = Sender(photoUrl: "", senderId: "1", displayName: "Joe Smith")
+    private let selfSender = Sender(photoUrl: MessengerDefaults.shared.profilePicture, senderId: MessengerDefaults.shared.userEmail, displayName: "Joe Smith")
     
-    private let otherSender = Sender(photoUrl: "", senderId: "1", displayName: "Joe Smith")
+    private var otherSender : Sender?
 
     init(with email:String){
         self.otherUserEmail = email
+        
+        otherSender = Sender(photoUrl: "", senderId: email, displayName: "Joe")
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,13 +52,33 @@ extension ChatVC:InputBarAccessoryViewDelegate{
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty else{
             return
         }
+        
         print(text)
         //send message
         if isNewConversation{
             //create a new conversation in database
+            
+            let message = Message(sender: selfSender, messageId: createMessageId(), sentDate: Date(), kind: .text(text))
+            print(message)
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
+               
+                print(success)
+                
+            }
+            
+            
         }else{
             //append to exsisting conversation data
         }
+    }
+    
+    private func createMessageId()->String{
+        
+        let currentUserEmail = MessengerDefaults.shared.userEmail
+        let dateString = Helper.dateFormatter.string(from: Date())
+        let newIdentifire = "\(otherUserEmail)_\(currentUserEmail)_\(dateString)"
+        print("newIdentifire==>",newIdentifire)
+        return newIdentifire
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +86,8 @@ extension ChatVC:InputBarAccessoryViewDelegate{
         messageInputBar.inputTextView.becomeFirstResponder()
     }
 }
+
+
 
 
 extension ChatVC:MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelegate{
@@ -80,3 +106,6 @@ extension ChatVC:MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelega
     
     
 }
+
+
+

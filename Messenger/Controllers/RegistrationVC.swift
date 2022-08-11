@@ -220,7 +220,11 @@ class RegistrationVC: UIViewController {
                 print("User already exists, please log in")
                 self?.userRegistrationErrorAlert(messege: "User already exists, please log in")
             }else{
+                
+                MessengerDefaults.shared.userName = firstName + " " + lastName
+                
                 let user = UserModel(firstName: firstName, lastName: lastName, email: email)
+                
                 self?.insertUserIntoDatabase(with: user,password: password)
             }
         }
