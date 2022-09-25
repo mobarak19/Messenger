@@ -12,3 +12,9 @@ class Constants{
     static let APP_DATABASE_NAME = "messenger"
     static let PROFILE_PICTURE_POSTFIX = "_profile_picture.png"
 }
+
+class FBCollectionName{
+    static let USERS = "users"
+    static let CONVERSATIONS = "conversations"
+    static let AUTH = "auth"
+}

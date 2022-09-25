@@ -19,7 +19,7 @@ class ChatVC: MessagesViewController {
     
     private var messages = [Message]()
     
-    private let selfSender = Sender(photoUrl: MessengerDefaults.shared.profilePicture, senderId: MessengerDefaults.shared.userEmail, displayName: "Joe Smith")
+    private let selfSender = Sender(photoUrl: MessengerDefaults.shared.profilePicture, senderId: MessengerDefaults.shared.userEmail, displayName: MessengerDefaults.shared.userName)
     
     private var otherSender : Sender?
 

@@ -26,7 +26,7 @@ extension DatabaseManager{
     ///check if a user exsits
     
     func ifUserExist(email:String,completion:@escaping(Bool)->Void){
-        database.child("auth").child(email.makeFirebaseDatabaseKey()).observeSingleEvent(of: .value) { snapshot in
+        database.child(FBCollectionName.AUTH).child(email.makeFirebaseDatabaseKey()).observeSingleEvent(of: .value) { snapshot in
             guard snapshot.value is String else{
                 completion(false)
                 return
@@ -38,7 +38,7 @@ extension DatabaseManager{
     ///insert User into database
     func insertUser(user: UserModel,completion:@escaping(Bool)->Void){
         do{
-            database.child("auth").child(user.email.makeFirebaseDatabaseKey()).setValue([
+            database.child(FBCollectionName.AUTH).child(user.email.makeFirebaseDatabaseKey()).setValue([
                 "first_name":user.firstName,
                 "last_name":user.lastName
             ],withCompletionBlock: { error, _ in
@@ -47,7 +47,7 @@ extension DatabaseManager{
 
                     return
                 }
-                self.database.child("users").observeSingleEvent(of: .value, with: { snapeshop in
+                self.database.child(FBCollectionName.USERS).observeSingleEvent(of: .value, with: { snapeshop in
                     if var usersCollection = snapeshop.value as?[[String:String]]{
                                                 
                         let newCollection = [
@@ -56,7 +56,7 @@ extension DatabaseManager{
                                             ]
                         usersCollection.append(newCollection)
                         
-                        self.database.child("users").setValue(usersCollection,withCompletionBlock: {error, _ in
+                        self.database.child(FBCollectionName.USERS).setValue(usersCollection,withCompletionBlock: {error, _ in
                            
                             guard error == nil else{
                                 
@@ -76,7 +76,7 @@ extension DatabaseManager{
                                 "email": user.email.makeFirebaseDatabaseKey()
                             ]
                         ]
-                        self.database.child("users").setValue(newCollection,withCompletionBlock: {error, _ in
+                        self.database.child(FBCollectionName.USERS).setValue(newCollection,withCompletionBlock: {error, _ in
                             guard error == nil else{
                                 completion(false)
                                 return
@@ -95,7 +95,7 @@ extension DatabaseManager{
     
     func getAllUsers( completion : @escaping (Result<[[String:String]],Error>)->Void){
         
-        self.database.child("users").observeSingleEvent(of: .value, with: {snapshot in
+        self.database.child(FBCollectionName.USERS).observeSingleEvent(of: .value, with: {snapshot in
            
             guard let value = snapshot.value as? [[String:String]] else{
                 completion(.failure(DatabaseError.userFetchError))
@@ -110,6 +110,90 @@ extension DatabaseManager{
 extension DatabaseManager{
     
     func createNewConversation(with otherUserEmail:String,firstMessage:Message,completion:@escaping(Bool)->Void){
+        let currentEmail = MessengerDefaults.shared.userEmail
+        guard !currentEmail.isEmpty else{
+            return
+        }
+        let safeEmail = currentEmail.makeFirebaseDatabaseKey()
+        let ref = database.child(FBCollectionName.AUTH).child(safeEmail)
+        
+        ref.observeSingleEvent(of: .value) { snapshot in
+            guard var userNode = snapshot.value as? [String:Any] else {
+                completion(false)
+                return
+            }
+            let sendDate = firstMessage.sentDate.formatted(date: .complete, time: .complete)
+            
+            var message = ""
+            
+            switch firstMessage.kind{
+            case .text(let messageText):
+                message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            let newConversation:[String:Any] = [
+                "id":"conversation_\(firstMessage.messageId)",
+                "other_user_email":otherUserEmail,
+                "latest_message":[
+                    "date":sendDate,
+                    "message":message,
+                    "is_read":false
+                ]
+            ]
+            
+            if var conversations = userNode[FBCollectionName.CONVERSATIONS] as? [[String:Any]]{
+                // conversation array exists for current user
+                // append new conversation
+                
+                
+                conversations.append(newConversation)
+                
+                userNode[FBCollectionName.CONVERSATIONS] = conversations
+                
+                ref.setValue(userNode) { error, _ in
+                    guard error == nil else {
+                       completion(false)
+                        return
+                    }
+                    completion(true)
+                }
+            }else{
+                
+                // no conversation found
+                // create new one
+                
+                userNode[FBCollectionName.CONVERSATIONS] = [
+                    newConversation
+                ]
+                ref.setValue(userNode) { error, _ in
+                    guard error == nil else {
+                       completion(false)
+                        return
+                    }
+                    completion(true)
+                }
+            }
+            
+        }
+        
         
     }
     func getAllConversations(for email:String,completion:@escaping(Result<String,Error>)->Void){
